@@ -12,9 +12,11 @@
 class ProtoApp
 {
 public:
+   const char* d_name;
    static ProtoApp* GetInstance();
 
 private:
+   
    ProtoApp();
    static ProtoApp* Singleton;
 
@@ -27,7 +29,11 @@ private:
    EvButton* w_ok_button_b;
    EvLabel*  w_ok_button_l;
 
+   EvButton* w_connect_to_db;
+
    EvDropdown* w_cat_list_dl;
+
+   static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 };
 
 #endif /* PROTO_APP */

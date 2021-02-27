@@ -10,10 +10,9 @@ void EvButton::Display(Widget w_base)
    w_widget = XtVaCreateManagedWidget(label, xmPushButtonWidgetClass, w_base, NULL);
 }
 
-void EvButton::AddCallback(ButtonCallback function)
+void EvButton::AddCallback(Widget w, XtCallbackProc func, XtPointer caller)
 {
-   callback = (ButtonCallback)function;
-   XtAddCallback(w_widget, XmNactivateCallback, (XtCallbackProc)callback, (XtPointer)this);
+   XtAddCallback(w_widget, XmNactivateCallback, (XtCallbackProc)func, (XtPointer)caller);
 }
 
 void EvButton::SetPos(unsigned int x, unsigned int y)

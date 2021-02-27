@@ -1,6 +1,5 @@
 #include "ProtoApp.h"
 
-
 ProtoApp* ProtoApp::Singleton;
 
 ProtoApp* ProtoApp::GetInstance()
@@ -15,6 +14,7 @@ ProtoApp::ProtoApp()
    // **********************************
    // * Init app/widgets
    // **********************************
+   d_name = "Yeet";
    Boolean test  = FALSE;
    main_app      = new EvApp();
 
@@ -24,6 +24,8 @@ ProtoApp::ProtoApp()
 
    w_ok_button_l = new EvLabel("Ok Button");
    w_ok_button_b = new EvButton("OK");
+
+   w_connect_to_db = new EvButton("Connect to DB");
 
    w_cat_list_dl = new EvDropdown("Cat");
 
@@ -52,7 +54,18 @@ ProtoApp::ProtoApp()
    w_cat_list_dl->AddToList("5");
    w_cat_list_dl->SetPos(110, 200);
 
+   w_connect_to_db->Display(w_main_form_f->GetWidget());
+   w_connect_to_db->SetPos(5,300);
+   w_connect_to_db->AddCallback(w_connect_to_db->GetWidget(), (XtCallbackProc)connect_to_db_cb, (XtPointer)this);
+
    main_widget->RealizeWidget();
    
    EvApp::MainLoop();
+}
+
+void ProtoApp::connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs)
+{
+   ProtoApp* obj = (ProtoApp*)client_data;
+   std::cout << obj->d_name << "\n";
+   std::cout << "WHY GOD\n";
 }
