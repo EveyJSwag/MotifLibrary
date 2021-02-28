@@ -8,6 +8,7 @@
 #include "EvLabel.h"
 #include "EvList.h"
 #include "EvDropdown.h"
+#include "EvCursor.h"
 
 class ProtoApp
 {
@@ -23,15 +24,15 @@ private:
    EvApp*    main_app;
    EvWidget* main_widget;
 
+   EvCursor* cursor_mgr;
+
    EvLabel*  w_title_l;
 
    EvForm*   w_main_form_f;
-   EvButton* w_ok_button_b;
-   EvLabel*  w_ok_button_l;
+
+   EvList*   w_status_list_lst;
 
    EvButton* w_connect_to_db;
-
-   EvDropdown* w_cat_list_dl;
 
    static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 };

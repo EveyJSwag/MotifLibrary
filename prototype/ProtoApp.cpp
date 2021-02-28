@@ -1,4 +1,5 @@
 #include "ProtoApp.h"
+#include <X11/cursorfont.h>
 
 ProtoApp* ProtoApp::Singleton;
 
@@ -15,47 +16,36 @@ ProtoApp::ProtoApp()
    // * Init app/widgets
    // **********************************
    d_name = "Yeet";
-   Boolean test  = FALSE;
-   main_app      = new EvApp();
 
-   w_main_form_f = new EvForm("Protoform");
+   main_app           = new EvApp();
 
-   w_title_l     = new EvLabel("Cats");
+   w_main_form_f      = new EvForm("Protoform");
 
-   w_ok_button_l = new EvLabel("Ok Button");
-   w_ok_button_b = new EvButton("OK");
+   w_title_l          = new EvLabel("CATS");
 
-   w_connect_to_db = new EvButton("Connect to DB");
+   w_status_list_lst  = new EvList("Status list");
 
-   w_cat_list_dl = new EvDropdown("Cat");
+   w_connect_to_db    = new EvButton("Connect to DB");
 
-   main_widget   = new EvWidget();
+   main_widget        = new EvWidget();
 
    // **********************************
    // * Display/Position the widgets
    // **********************************
    main_widget->AppInitialize();
+
    w_main_form_f->Display(main_widget->w_widget);
-   w_main_form_f->SetSize(500, 500);
+   w_main_form_f->SetSize(250, 250);
    
    w_title_l->Display(w_main_form_f->GetWidget());
-   w_title_l->SetPos(220, 4);
+   w_title_l->SetPos(120, 4);
 
-   w_ok_button_l->Display(w_main_form_f->GetWidget());
-   w_ok_button_l->SetPos(5, 440);
-
-   w_ok_button_b->Display(w_main_form_f->GetWidget());
-   w_ok_button_b->SetPos(5, 460);
-
-   w_cat_list_dl->Display(w_main_form_f->GetWidget());
-   w_cat_list_dl->SetLabel("YEET");
-   w_cat_list_dl->AddToList("1");
-   w_cat_list_dl->AddToList("3");
-   w_cat_list_dl->AddToList("5");
-   w_cat_list_dl->SetPos(110, 200);
+   w_status_list_lst->Display(w_main_form_f->GetWidget());
+   w_status_list_lst->SetPos(90, 100);
+   w_status_list_lst->SetSize(40, 100);
 
    w_connect_to_db->Display(w_main_form_f->GetWidget());
-   w_connect_to_db->SetPos(5,300);
+   w_connect_to_db->SetPos(5,220);
    w_connect_to_db->AddCallback(w_connect_to_db->GetWidget(), (XtCallbackProc)connect_to_db_cb, (XtPointer)this);
 
    main_widget->RealizeWidget();
@@ -65,7 +55,8 @@ ProtoApp::ProtoApp()
 
 void ProtoApp::connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs)
 {
+
    ProtoApp* obj = (ProtoApp*)client_data;
-   std::cout << obj->d_name << "\n";
-   std::cout << "WHY GOD\n";
+   obj->cursor_mgr->GetInstance()->ChangeCursor(XC_watch, obj->w_main_form_f->GetWidget());
+   obj->w_status_list_lst->AddToList("CONNECTING...");
 }
