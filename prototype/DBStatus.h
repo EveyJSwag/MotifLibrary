@@ -1,5 +1,5 @@
-#ifndef PROTO_APP
-#define PROTO_APP
+#ifndef DBSTATUS
+#define DBSTATUS
 
 #include <vector>
 #include "EvApp.h"
@@ -11,23 +11,25 @@
 #include "EvDropdown.h"
 #include "EvCursor.h"
 #include "EvDBMain.h"
-#include "DBStatus.h"
 
-
-
-
-class ProtoApp
+class DBStatus
 {
 public:
    typedef void* (*DB_THREAD_PROC)(void *);
 
+   DBStatus(Widget a_main_window);
+
    const char* d_name;
-   static ProtoApp* GetInstance();
+
+   void DisplayWindow();
 
 private:
    
-   ProtoApp();
-   static ProtoApp* Singleton;
+   Widget    parent_window;
+
+   Widget    w_db_shell;
+
+   Widget    w_db_form;
 
    EvDBMain* d_evdb;
 
@@ -44,15 +46,8 @@ private:
 
    EvButton* w_connect_to_db;
 
-   EvButton* w_db_status;
-
-   DBStatus* db_status_window;
-
-   pthread_t db_thread_id; 
-
    static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
-   static void spawn_db_status_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 
 };
 
-#endif /* PROTO_APP */
+#endif /* DBSTATUS */

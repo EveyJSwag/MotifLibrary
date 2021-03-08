@@ -1,3 +1,5 @@
+#ifndef EV_CURSOR
+#define EV_CURSOR
 #include "EvWidget.h"
 
 class EvCursor : EvWidget
@@ -12,3 +14,5 @@ private:
    Cursor main_cursor;
    static EvCursor* Singleton;
 };
+
+#endif /* EV_CURSOR */
