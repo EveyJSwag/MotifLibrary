@@ -5,7 +5,7 @@ EvButton::EvButton(const char* a_label)
    label = a_label;
 }
 
-void EvButton::Display(Widget w_base)
+void EvButton::DisplayW(Widget w_base)
 {
    w_widget = XtVaCreateManagedWidget(label, xmPushButtonWidgetClass, w_base, NULL);
 }

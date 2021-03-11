@@ -5,7 +5,7 @@ EvRowCol::EvRowCol(const char* a_name)
    name = a_name;
 }
 
-void EvRowCol::Display(Widget w_base)
+void EvRowCol::DisplayW(Widget w_base)
 {
    w_widget = XtVaCreateManagedWidget(name, xmRowColumnWidgetClass, w_base, NULL);
 }

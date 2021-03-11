@@ -44,7 +44,7 @@ private:
 
    EvList*   w_status_list_lst;
 
-   EvButton* w_connect_to_db;
+   EvButton* w_connect_to_db_pb;
 
    static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 

@@ -4,7 +4,7 @@ EvForm::EvForm(const char* a_name)
     name = a_name;
 }
 
-void EvForm::Display(Widget w_base)
+void EvForm::DisplayW(Widget w_base)
 {
     w_widget = XtVaCreateManagedWidget(name, xmFormWidgetClass, w_base, NULL);
 }

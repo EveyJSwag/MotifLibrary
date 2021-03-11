@@ -5,7 +5,7 @@ EvCombobox::EvCombobox(const char* a_name)
    name = a_name;
 }
 
-void EvCombobox::Display(Widget a_widget)
+void EvCombobox::DisplayW(Widget a_widget)
 {
    w_widget = XtVaCreateManagedWidget(name, xmComboBoxWidgetClass, a_widget, XmNeditable, False, NULL);
 }

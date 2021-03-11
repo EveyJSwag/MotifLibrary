@@ -8,7 +8,7 @@ EvDropdown::EvDropdown(const char* a_name)
    name = a_name;
 }
 
-void EvDropdown::Display(Widget a_widget)
+void EvDropdown::DisplayW(Widget a_widget)
 {
    w_widget = XtVaCreateManagedWidget(name, xmDropDownWidgetClass, a_widget, NULL);
    w_evlist =  new EvList ("list", XmDropDownGetList(w_widget));

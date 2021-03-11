@@ -12,7 +12,7 @@ EvLabel::EvLabel(const char* a_name)
    name = a_name;
 }
 
-void EvLabel::Display(Widget a_widget)
+void EvLabel::DisplayW(Widget a_widget)
 {
    w_widget = XtVaCreateManagedWidget(name, xmLabelWidgetClass, a_widget, NULL);
 }

@@ -50,6 +50,8 @@ private:
 
    pthread_t db_thread_id; 
 
+   unsigned char db_ins_amt = 0;
+
    static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
    static void spawn_db_status_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 

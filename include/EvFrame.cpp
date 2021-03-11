@@ -5,7 +5,7 @@ EvFrame::EvFrame(const char* a_name)
    name = a_name;
 }
 
-void EvFrame::Display(Widget w_base)
+void EvFrame::DisplayW(Widget w_base)
 {
    w_widget = XtVaCreateManagedWidget(name, xmFrameWidgetClass, w_base, NULL);
 }

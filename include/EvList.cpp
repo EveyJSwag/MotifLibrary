@@ -12,7 +12,7 @@ EvList::EvList(const char* a_name, Widget a_widget)
    w_widget = a_widget;
 }
 
-void EvList::Display(Widget a_widget)
+void EvList::DisplayW(Widget a_widget)
 {
    w_widget = XtVaCreateManagedWidget(name, xmListWidgetClass, a_widget, NULL);
 }

@@ -13,7 +13,7 @@ class EvCombobox : EvWidget
 {
 public:
    EvCombobox(const char*);
-   void Display(Widget);
+   void DisplayW(Widget);
    const char* GetName() {return name;}
    Widget GetWidget(){return w_widget;}
    void SetPos(unsigned int, unsigned int);

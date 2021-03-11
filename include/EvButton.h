@@ -14,7 +14,7 @@ class EvButton : EvWidget
 
 public:
    EvButton(const char* a_label);
-   void Display(Widget);
+   void DisplayW(Widget);
    void AddCallback(Widget w, XtCallbackProc func, XtPointer caller);
    const char* GetLabel() {return label;}
    Widget GetWidget(){return w_widget;}

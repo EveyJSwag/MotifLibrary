@@ -11,7 +11,7 @@ public:
   Widget GetWidget(){return w_widget;}
   void SetPos(unsigned int, unsigned int);
   void SetSize(unsigned int, unsigned int);
-  void Display(Widget);
+  void DisplayW(Widget);
 private:
   Widget w_widget;
   const char* name;
