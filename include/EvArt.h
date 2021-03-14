@@ -2,6 +2,7 @@
 #define EV_ART
 
 #include "EvWidget.h"
+#include <string>
 
 typedef struct coord
 {
@@ -21,10 +22,11 @@ public:
    void SetPos(unsigned int, unsigned int);
    void SetSize(unsigned int, unsigned int);
    void SetName(const char*);
-   void DrawSquare(coord t, coord b, coord l, coord r);
+   void DrawSquare(coord t, coord b);
    void DrawCircle(coord center, unsigned int radius);
    void DrawLine(coord, coord);
    void DrawArc(coord, coord);
+   void DrawFont(std::string& a_str, coord pos);
 
 private:
    const char* name;
@@ -34,6 +36,11 @@ private:
    Window    window;
    GC        grph_ctx;
    XGCValues grph_ctx_val;
+
+   // *********************************
+   // * Need callbacks for art
+   // *********************************
+   static void ExposeArt(Widget w, XtPointer client_data, XmDrawingAreaCallbackStruct *cbk);
 
 };
 #endif /* EV_ART */

@@ -11,6 +11,7 @@
 #include "EvDropdown.h"
 #include "EvCursor.h"
 #include "EvDBMain.h"
+#include "EvArt.h"
 
 class DBStatus
 {
@@ -45,6 +46,8 @@ private:
    EvList*   w_status_list_lst;
 
    EvButton* w_connect_to_db_pb;
+
+   EvArt*    w_db_stat_art;
 
    static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 
