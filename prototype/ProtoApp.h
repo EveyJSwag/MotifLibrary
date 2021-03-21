@@ -19,7 +19,7 @@
 class ProtoApp
 {
 public:
-   typedef void* (*DB_THREAD_PROC)(void *);
+   //typedef void* (*DB_THREAD_PROC)(void *);
 
    const char* d_name;
    static ProtoApp* GetInstance();
@@ -52,9 +52,9 @@ private:
 
    unsigned char db_ins_amt = 0;
 
-   static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
+   //static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
    static void spawn_db_status_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
-
+   static void destroy_db_status_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 };
 
 #endif /* PROTO_APP */

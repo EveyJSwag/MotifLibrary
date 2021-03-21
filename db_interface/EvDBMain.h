@@ -12,14 +12,13 @@ public:
    class DBException : public std::exception
    {
    public:
-      const char* what() const throw()
-      {
-         return "Database Exception";
-      }
+      DBException(const unsigned int a_line, std::string& a_file, std::string& a_reason);
+      std::string GetReason() {return reason;}
 
    private:
       int line;
-      char* file;
+      std::string file;
+      std::string reason;
    };
 
    static EvDBMain* GetInstance();
@@ -34,7 +33,6 @@ private:
    static EvDBMain* instance;
    EvDBMain();
    EvDBMain(const unsigned char* a_hostname, const unsigned char* a_username, const unsigned char* a_password) throw(DBException);
-   EvDBMain(const std::string& a_hostname, const std::string& a_username, const std::string& a_password) throw(DBException);
    int Initialize();
    bool isInitialized;
 };
