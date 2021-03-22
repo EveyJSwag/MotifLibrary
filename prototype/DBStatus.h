@@ -17,15 +17,6 @@ class DBStatus
 {
 public:
 
-   typedef enum db_status 
-   {
-      CONNECTING,
-      HOST_UP,
-      HOST_DOWN,
-      DB_UP,
-      DB_DOWN
-   } db_status;
-
    typedef void* (*DB_THREAD_PROC)(void *);
 
    DBStatus(Widget a_main_window);
@@ -62,8 +53,6 @@ private:
    EvButton* w_clear_art_pb;
 
    EvArt*    w_db_stat_art;
-
-   db_status cur_status;
    
    pthread_t db_thread_id;
 

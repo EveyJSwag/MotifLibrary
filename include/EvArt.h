@@ -35,6 +35,8 @@ public:
    void DrawLine(coord, coord, unsigned long a_color);
    void DrawArc(coord, coord, unsigned long a_color);
    void DrawFont(std::string& a_str, coord pos, unsigned long a_color);
+   Window GetWindow(){return window;};
+   void   SetWindow(Window a_window){window=a_window;}
 
 private:
    const char* name;

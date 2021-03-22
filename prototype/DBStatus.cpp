@@ -6,11 +6,10 @@
 #include <Xm/MainW.h>
 #include <Xm/CascadeB.h>
 #include <sstream>
-void dumb_function();
+
 DBStatus::DBStatus(Widget a_main_window)
 {
    parent_window = a_main_window;
-   cur_status = db_status::CONNECTING;
    db_thread_id = 0;
 }
 
@@ -22,10 +21,10 @@ void DBStatus::connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCal
    obj->cursor_mgr->GetInstance()->ChangeCursor(XC_arrow, obj->w_main_form_f->GetWidget());
 }
 
- Widget DBStatus::GetWidget()
- {
-    return w_db_shell;
- }
+Widget DBStatus::GetWidget()
+{
+   return w_db_shell;
+}
 
 void DBStatus::DisplayWindow()
 {
@@ -48,7 +47,6 @@ void DBStatus::DisplayWindow()
    w_clear_art_pb->AddCallback(w_clear_art_pb->GetWidget(), (XtCallbackProc)clear_art_cb, this);
    w_clear_art_pb->SetPos(100,85);
 }
-
 
 void DBStatus::clear_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallbackStruct *cbk)
 {
@@ -79,32 +77,34 @@ void DBStatus::expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallb
    std::string status_title = "Status: ";
    std::string status       = "";
 
-   switch(obj->cur_status)
+   EvDBMain::db_status status_ref = EvDBMain::GetStatus();
+   switch(status_ref)
    {
-      case obj->db_status::CONNECTING:
+      case EvDBMain::db_status::CONNECTING:
       {
          status = "Connecting";
          obj->cursor_mgr->GetInstance()->ChangeCursor(XC_watch, obj->w_main_form_f->GetWidget());
          break;
       }
-      case obj->db_status::DB_DOWN:
+      case EvDBMain::db_status::DB_DOWN:
       {
          status = "Database is uncreachable";
          obj->cursor_mgr->GetInstance()->ChangeCursor(XC_arrow, obj->w_main_form_f->GetWidget());
          break;
       }
-      case obj->db_status::DB_UP:
+      case EvDBMain::db_status::DB_UP:
       {
          status = "Database is up";
          obj->cursor_mgr->GetInstance()->ChangeCursor(XC_arrow, obj->w_main_form_f->GetWidget());
          break;
       }
-      case obj->db_status::HOST_DOWN:
+      case EvDBMain::db_status::HOST_DOWN:
       {
          status = "The host is unreachable";
          obj->cursor_mgr->GetInstance()->ChangeCursor(XC_arrow, obj->w_main_form_f->GetWidget());
+         break;
       }
-      case obj->db_status::HOST_UP:
+      case EvDBMain::db_status::HOST_UP:
       {
          status = "The host is alive";
          obj->cursor_mgr->GetInstance()->ChangeCursor(XC_arrow, obj->w_main_form_f->GetWidget());
@@ -126,27 +126,4 @@ void DBStatus::expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallb
    obj->w_db_stat_art->DrawFont(title, pos_title, PURPLE_EV);
    obj->w_db_stat_art->DrawFont(full_db_host_str, pos_fdbh, BLACK_EV);
    obj->w_db_stat_art->DrawFont(full_db_status_str, pos_fdbs, BLACK_EV);
-
-
-   /*
-   if (obj->db_thread_id == 0)
-   {
-      try {
-         int thread_rt = pthread_create(&(obj->db_thread_id), NULL, (DB_THREAD_PROC)obj->d_evdb->GetInstance(), NULL);
-         pthread_detach(obj->db_thread_id);
-      }
-      catch (EvDBMain::DBException& e)
-      {
-         std::cout << e.GetReason();
-      }
-   }
-   */
-   /*
-   
-   */  
-}
-
-void dumb_function()
-{
-   while(1);
 }

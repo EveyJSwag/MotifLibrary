@@ -15,7 +15,6 @@ void EvArt::DisplayW(Widget w_base)
    window = XtWindow(w_widget);
 
    XtVaSetValues(w_base, XmNworkWindow, w_widget, NULL);
-   //XtAddCallback(w_widget, XmNexposeCallback, (XtCallbackProc)EvArt::ExposeArt, (XtPointer)this);
 
    grph_ctx_val.foreground = BlackPixelOfScreen(screen_ptr);
    grph_ctx = XCreateGC(display, RootWindowOfScreen(screen_ptr), GCForeground, &grph_ctx_val);

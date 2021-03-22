@@ -1,12 +1,12 @@
 EXEC := MOTIF_EXEC 
-DIRS := include/ src/ prototype/ db_interface/
+DIRS := include/ src/ prototype/ db_interface/ util/
 FILES := $(foreach file,$(DIRS),$(wildcard $(file)*.cpp))
 OBJS := $(foreach c_file,$(FILES),$(patsubst %.cpp,%.o,$(c_file)))
 CLANG := g++
 GCC := cc 
 COMP_FLAGS := -std=c++11 -g
 LIB := -lXm -lXt -lX11 -lstdc++ -lpthread -L/opt/oracle/instantclient_21_1 -locci -L/opt/oracle/instantclient_21_1 -lclntsh 
-INCLUDE = -I/home/everett/Projects/motif/include/ -I/home/everett/Projects/motif/prototype/ -I/home/everett/Projects/motif/db_interface -I/opt/oracle/instantclient_21_1/sdk/include
+INCLUDE = -I/home/everett/Projects/motif/include/ -I/home/everett/Projects/motif/prototype/ -I/home/everett/Projects/motif/db_interface -I/home/everett/Projects/motif/util -I/opt/oracle/instantclient_21_1/sdk/include
 
 $(EXEC): $(OBJS)
 	$(CLANG) $(COMP_FLAGS) -o $(EXEC) $(OBJS) $(LIB) 
