@@ -1,4 +1,6 @@
 #include "DBStatus.h"
+#include "Pictures.h"
+#include "ProtoApp.h"
 #include <pthread.h>
 #include <X11/cursorfont.h>
 #include <Xm/DrawingA.h>
@@ -18,6 +20,8 @@ void DBStatus::connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCal
    DBStatus* obj = (DBStatus*)client_data;
    obj->cursor_mgr->GetInstance()->ChangeCursor(XC_watch, obj->w_main_form_f->GetWidget());
 
+   //obj->d_evdb->GetInstance();
+
    obj->cursor_mgr->GetInstance()->ChangeCursor(XC_arrow, obj->w_main_form_f->GetWidget());
 }
 
@@ -28,7 +32,12 @@ Widget DBStatus::GetWidget()
 
 void DBStatus::DisplayWindow()
 {
-   w_db_shell = XtVaCreatePopupShell("Database Status", vendorShellWidgetClass, parent_window, XmNheight, 115, XmNwidth, 304, NULL);
+   w_db_shell = XtVaCreatePopupShell(
+      "Database Status", 
+      vendorShellWidgetClass, 
+      parent_window, 
+      XmNheight, 115, 
+      XmNwidth, 304, NULL);
    XtManageChild(w_db_shell);
 
    w_main_form_f = new EvForm("Main DB Form");
@@ -36,10 +45,21 @@ void DBStatus::DisplayWindow()
 
    w_db_stat_art = new EvArt("DB Status Art");
    w_db_stat_art->DisplayW(w_main_form_f->GetWidget());
-   XtAddCallback(w_db_stat_art->GetWidget(), XmNexposeCallback, (XtCallbackProc)expose_art_cb, (XtPointer)this);
+   
+   XtAddCallback(
+      w_db_stat_art->GetWidget(), 
+      XmNexposeCallback, 
+      (XtCallbackProc)expose_art_cb, 
+      (XtPointer)this);
 
    w_connect_to_db_pb    = new EvButton("Connect to DB");
    w_connect_to_db_pb->DisplayW(w_main_form_f->GetWidget());
+   
+   w_connect_to_db_pb->AddCallback(
+      w_connect_to_db_pb->GetWidget(), 
+      (XtCallbackProc)connect_to_db_cb, 
+      this);
+   
    w_connect_to_db_pb->SetPos(1,85);
 
    w_clear_art_pb = new EvButton("Clear Art");
@@ -116,6 +136,7 @@ void DBStatus::expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallb
    full_db_status << status_title << "               " << status;
    std::string full_db_status_str = full_db_status.str();
 
+   
    obj->w_db_stat_art->DrawSquare(t, b, RED_EV);
    t = {START_POS_X_db_stat+1, START_POS_Y_db_stat+1};
    b = {MAX_HEIGHT_db_stat-1, MAX_WIDTH_db_stat-1};

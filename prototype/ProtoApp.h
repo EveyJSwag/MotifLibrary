@@ -17,6 +17,7 @@ class ProtoApp
 public:
    const char* d_name;
    static ProtoApp* GetInstance();
+   static std::vector<Pixmap> pixmap_list;
 
 private:
    ProtoApp();

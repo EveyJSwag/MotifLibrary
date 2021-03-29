@@ -11,7 +11,18 @@ EvDBMain* EvDBMain::GetInstance()
 {
    if (! instance)
    {
-      instance = new EvDBMain((const unsigned char*)DB_HOST, (const unsigned char*)DB_USERNAME, (const unsigned char*)DB_PASSWORD);
+      instance = new EvDBMain(
+         (const unsigned char*)DB_HOST, 
+         (const unsigned char*)DB_USERNAME, 
+         (const unsigned char*)DB_PASSWORD);
+   }
+   else if(EvDBMain::cur_status == HOST_DOWN or EvDBMain::cur_status == DB_DOWN)
+   {
+      free(instance);
+      instance = new EvDBMain(
+         (const unsigned char*)DB_HOST, 
+         (const unsigned char*)DB_USERNAME, 
+         (const unsigned char*)DB_PASSWORD);
    }
    return instance;
 }

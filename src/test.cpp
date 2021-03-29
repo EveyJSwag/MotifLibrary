@@ -5,13 +5,13 @@ int main()
     // *********************************
     // * Load database accessor
     // *********************************
-    try
-    {
-       EvDBMain::GetInstance();
-    }
-    catch (EvDBMain::DBException& ex)
-    {
-       std::cout << ex.GetReason();
-    }
+    //try
+    //{
+    //   EvDBMain::GetInstance();
+    //}
+    //catch (EvDBMain::DBException& ex)
+    //{
+    //   std::cout << ex.GetReason();
+    //}
     ProtoApp::GetInstance();
 }

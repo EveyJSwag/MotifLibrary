@@ -32,8 +32,11 @@ public:
 
    static EvDBMain* GetInstance();
 
-   int Insert(const unsigned char* a_instr) throw(DBException);
-   int Select(const unsigned char* a_instr, const unsigned char* a_outstr) throw(DBException);
+   int Insert(const unsigned char* a_instr) 
+      throw(DBException);
+
+   int Select(const unsigned char* a_instr, const unsigned char* a_outstr) 
+      throw(DBException);
 
    static db_status GetStatus(){return cur_status;}
    static bool GetIsInit(){return isInitialized;}
@@ -51,7 +54,8 @@ private:
    OCIDefine  *defnp  = (OCIDefine*) 0;
 
    EvDBMain();
-   EvDBMain(const unsigned char* a_hostname, const unsigned char* a_username, const unsigned char* a_password) throw(DBException);
+   EvDBMain(const unsigned char* a_hostname, const unsigned char* a_username, const unsigned char* a_password) 
+      throw(DBException);
 
    void CreateEnv() throw(DBException);
    void ServerAttach() throw(DBException);

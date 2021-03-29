@@ -1,10 +1,12 @@
 #include "ProtoApp.h"
+#include "Pictures.h"
 #include <pthread.h>
 #include <X11/cursorfont.h>
 #include <Xm/DialogS.h>
 #include "StringUtil.h"
 #include <sstream>
 ProtoApp* ProtoApp::Singleton;
+std::vector<Pixmap> ProtoApp::pixmap_list;
 
 ProtoApp* ProtoApp::GetInstance()
 {
@@ -47,7 +49,7 @@ ProtoApp::ProtoApp()
 
    w_db_art_area->DisplayW(w_main_form_f->GetWidget());
    w_db_art_area->SetPos(2,10);
-   w_db_art_area->SetSize(40, 246);
+   w_db_art_area->SetSize(80, 246);
    XtAddCallback(w_db_art_area->GetWidget(), XmNexposeCallback, (XtCallbackProc)expose_art_cb, (XtPointer)this);
    
    w_status_list_lst->DisplayW(w_main_form_f->GetWidget());
@@ -87,7 +89,20 @@ ProtoApp::ProtoApp()
    // ********************************************
    XmPushButtonCallbackStruct* boot_struct;
    spawn_db_status_cb(w_db_status->GetWidget(), (XtPointer)this, boot_struct);
+
+   // ********************************************
+   // * Populate pixmaps
+   // ********************************************
+   ProtoApp::pixmap_list.push_back(
+      XCreatePixmapFromBitmapData(
+         XtDisplay(w_main_form_f->GetWidget()), 
+         RootWindowOfScreen(XtScreen(w_main_form_f->GetWidget())), 
+         (char*)cat_bits, 24, 24, 
+         BLACK_EV, WHITE_EV, 
+         XDefaultDepthOfScreen(XtScreen(w_main_form_f->GetWidget()))));
+
    
+
    EvApp::MainLoop();
 }
 
@@ -112,10 +127,11 @@ void ProtoApp::destroy_db_status_cb(Widget w, XtPointer client_data, XmPushButto
 void ProtoApp::expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallbackStruct* cbs)
 {
    ProtoApp* obj = (ProtoApp*) client_data;
-   std::string test_test = "lol";
-   coord test_coord;
-   test_coord.x = 22;
-   test_coord.y = 22;
-   obj->w_db_art_area->SetWindow(XtWindow(w));
-   obj->w_db_art_area->DrawFont(test_test, test_coord,BLACK_EV);
+
+   XGCValues tmp_gc_val;
+   tmp_gc_val.foreground = BlackPixelOfScreen(XtScreen(w));
+   GC tmp_gc = XCreateGC(XtDisplay(w), XDefaultRootWindow(XtDisplay(w)), GCForeground, &tmp_gc_val);
+
+   XCopyArea(XtDisplay(w), pixmap_list[0], XtWindow(w), tmp_gc, 0,0, 24,24, 0, 0);
+   XCopyArea(XtDisplay(w), pixmap_list[0], XtWindow(w), tmp_gc, 0,0, 24,24, 24, 0);
 }
