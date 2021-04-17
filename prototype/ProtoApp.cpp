@@ -114,7 +114,7 @@ void ProtoApp::spawn_db_status_cb(Widget w, XtPointer client_data, XmPushButtonC
       obj->db_status_window = new DBStatus(obj->w_main_form_f->GetWidget());
       obj->db_status_window->DisplayWindow();
       obj->db_ins_amt++;
-      XtAddCallback(obj->db_status_window->GetWidget(), XmNdestroyCallback, (XtCallbackProc)destroy_db_status_cb, obj);
+      //XtAddCallback(obj->db_status_window->GetWidget(), XmNdestroyCallback, (XtCallbackProc)destroy_db_status_cb, obj);
    }
 }
 

@@ -27,6 +27,8 @@ public:
 
    Widget GetWidget();
 
+   static void UpdateStatus(void* client_data);
+
 private:
    
    Widget    parent_window;
@@ -56,11 +58,17 @@ private:
    
    pthread_t db_thread_id;
 
+   pthread_t window_thread_id;
+
+   bool      is_displayed = false;
+
    static void connect_to_db_cb(Widget w, XtPointer client_data, XmPushButtonCallbackStruct* cbs);
 
    static void clear_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallbackStruct *cbk);
 
    static void expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallbackStruct *cbk);
+
+   void display_window_thread();
 };
 
 #endif /* DBSTATUS */

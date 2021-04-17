@@ -30,8 +30,54 @@ Widget DBStatus::GetWidget()
    return w_db_shell;
 }
 
+
+
 void DBStatus::DisplayWindow()
 {
+//   pthread_create(
+//      &window_thread_id, NULL,
+//      (DB_THREAD_PROC)&DBStatus::display_window_thread, this);
+
+   //pthread_detach(window_thread_id);
+   w_db_shell = XtVaCreatePopupShell(
+      "Database Status", 
+      vendorShellWidgetClass, 
+      parent_window, 
+      XmNheight, 115, 
+      XmNwidth, 304, NULL);
+   XtManageChild(w_db_shell);
+
+   w_main_form_f = new EvForm("Main DB Form");
+   w_main_form_f->DisplayW(w_db_shell);
+
+   w_db_stat_art = new EvArt("DB Status Art");
+   w_db_stat_art->DisplayW(w_main_form_f->GetWidget());
+   
+   XtAddCallback(
+      w_db_stat_art->GetWidget(), 
+      XmNexposeCallback, 
+      (XtCallbackProc)expose_art_cb, 
+      (XtPointer)this);
+
+   w_connect_to_db_pb    = new EvButton("Connect to DB");
+   w_connect_to_db_pb->DisplayW(w_main_form_f->GetWidget());
+   
+   w_connect_to_db_pb->AddCallback(
+      w_connect_to_db_pb->GetWidget(), 
+      (XtCallbackProc)connect_to_db_cb, 
+      this);
+   
+   w_connect_to_db_pb->SetPos(1,85);
+
+   w_clear_art_pb = new EvButton("Clear Art");
+   w_clear_art_pb->DisplayW(w_main_form_f->GetWidget());
+   w_clear_art_pb->AddCallback(w_clear_art_pb->GetWidget(), (XtCallbackProc)clear_art_cb, this);
+   w_clear_art_pb->SetPos(100,85);
+}
+
+void DBStatus::display_window_thread()
+{
+
    w_db_shell = XtVaCreatePopupShell(
       "Database Status", 
       vendorShellWidgetClass, 
@@ -72,6 +118,18 @@ void DBStatus::clear_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallba
 {
    DBStatus* obj = (DBStatus*)client_data;
    XClearWindow(XtDisplay(obj->w_db_stat_art->GetWidget()), XtWindow(obj->w_db_stat_art->GetWidget()));
+}
+
+void DBStatus::UpdateStatus(void* client_data)
+{
+   DBStatus* obj = (DBStatus*)client_data;
+   if (obj->is_displayed)
+   {
+      DBStatus::expose_art_cb(
+         obj->GetWidget(), 
+         (XtPointer)obj, 
+         NULL);
+   }
 }
 
 void DBStatus::expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallbackStruct *cbk)
@@ -147,4 +205,6 @@ void DBStatus::expose_art_cb(Widget w, XtPointer client_data, XmDrawingAreaCallb
    obj->w_db_stat_art->DrawFont(title, pos_title, PURPLE_EV);
    obj->w_db_stat_art->DrawFont(full_db_host_str, pos_fdbh, BLACK_EV);
    obj->w_db_stat_art->DrawFont(full_db_status_str, pos_fdbs, BLACK_EV);
+
+   obj->is_displayed = true;
 }

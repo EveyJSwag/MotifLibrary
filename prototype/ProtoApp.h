@@ -15,6 +15,7 @@
 class ProtoApp
 {
 public:
+   typedef void* (*DB_THREAD_PROC)(void *);
    const char* d_name;
    static ProtoApp* GetInstance();
    static std::vector<Pixmap> pixmap_list;
